@@ -1,0 +1,18 @@
+.error-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 95vh;
+}
+.error-page__title {
+    margin: 1rem 5rem;
+}
+.error-page__go-back {
+    padding: 1rem;
+    background-color: #c7c7c7;
+    font-size: 2.4rem;
+    text-decoration: none;
+    color: #1e1e1e;
+    border-radius: 1rem;
+}
