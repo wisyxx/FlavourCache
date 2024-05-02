@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #3b4c62;
+  padding: 2rem;
+}
+.header__title {
+  margin: 0;
+  color: #e7eaee;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.navigation__link {
+  font-size: 2.4rem;
+  color: #e7eaee;
+  position: relative;
+}
+.navigation__link:hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+.navigation__link::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #e7eaee;
+  bottom: 0;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}

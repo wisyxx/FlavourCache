@@ -1,7 +1,13 @@
+import Header from '../header/Header';
 import './ShopPage.css';
 
 const ShopPage = () => {
-  return <h1>Shop</h1>;
+  return (
+    <>
+      <Header />
+      <h1>Shop</h1>;
+    </>
+  );
 };
 
 export default ShopPage;
