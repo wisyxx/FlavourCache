@@ -1,8 +1,8 @@
 import { RouterProvider } from 'react-router-dom';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './Globals.css';
 import router from './routes';
+import './Globals.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
