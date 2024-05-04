@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import Header from '../../components/header/Header';
 import { useProducts } from '../../hooks/useProducts';
 import './ShopPage.css';
+import Product from '../../components/product/Product';
 
 const ShopPage = () => {
   const { products } = useProducts();
@@ -12,15 +14,14 @@ const ShopPage = () => {
         <section className="products">
           {products.map((product) => {
             return (
-              <div key={product.id} className="product">
-                <img className='product__image' src={product.image} alt="Product image" />
-                <p className="product__name">{product.title}</p>
-                <p className="product__price">{product.price}€</p>
-                <div className="product__rating">
-                  <p className="rating__rate">⭐{product.rating.rate}</p>
-                  <p className="rating__count">🗨️{product.rating.count}</p>
-                </div>
-              </div>
+              <Product
+                name={product.title}
+                image={product.image}
+                id={product.id}
+                rate={product.rating.rate}
+                count={product.rating.count}
+                price={product.price}
+              />
             );
           })}
         </section>
