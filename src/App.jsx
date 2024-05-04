@@ -1,6 +1,6 @@
-import HomePage from './components/home-page/HomePage';
+import { useEffect, useState } from 'react';
+import HomePage from './pages/home-page/HomePage';
 
-// TODO: MAKE 404 custom page
 const App = () => {
   return <HomePage />;
 };
