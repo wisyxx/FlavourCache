@@ -1,11 +1,10 @@
 import './Product';
 
-const Product = ({ id, image, name, rate, count, price }) => {
-  const [clicked, setCliked] = useState(true);
-
+const Product = ({ id, image, name, rate, count, price, onClick }) => {
+  // TODO: Add active styles
   return (
     <>
-      <div key={id} className="product">
+      <div onClick={onClick} key={id} className="product">
         <img className="product__image" src={image} alt="Product image" />
         <p className="product__name">{name}</p>
         <p className="product__price">{price}€</p>

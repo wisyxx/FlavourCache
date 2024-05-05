@@ -1,11 +1,24 @@
 import { useState } from 'react';
-import Header from '../../components/header/Header';
 import { useProducts } from '../../hooks/useProducts';
-import './ShopPage.css';
+import Header from '../../components/header/Header';
 import Product from '../../components/product/Product';
+import Modal from '../../components/modal/Modal';
+import './ShopPage.css';
 
 const ShopPage = () => {
   const { products } = useProducts();
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+    document.body.style.overflow = 'hidden'; // Avoid scroll
+  };
+
+  const handleCloseModal = () => {
+    setSelectedProduct(null);
+    document.body.style.overflow = 'auto'; // Enable scroll
+  };
+
   return (
     <>
       <Header />
@@ -15,15 +28,29 @@ const ShopPage = () => {
           {products.map((product) => {
             return (
               <Product
+                key={product.id}
+                id={product.id}
                 name={product.title}
                 image={product.image}
-                id={product.id}
                 rate={product.rating.rate}
                 count={product.rating.count}
                 price={product.price}
+                onClick={() => handleProductClick(product)}
               />
             );
           })}
+          {selectedProduct && (
+            <Modal onClose={handleCloseModal}>
+              <div className="popover-content">
+                <h2>{selectedProduct.name}</h2>
+                <img src={selectedProduct.image} alt="Product image" />
+                <p>Price: {selectedProduct.price}€</p>
+                <p>Rating: ⭐{selectedProduct.rate}</p>
+                <p>Reviews: 🗨️{selectedProduct.count}</p>
+                <button onClick={handleCloseModal}>Close</button>
+              </div>
+            </Modal>
+          )}
         </section>
       </main>
     </>
