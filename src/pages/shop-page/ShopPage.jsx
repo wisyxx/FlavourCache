@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useProducts } from '../../hooks/useProducts';
 import Header from '../../components/header/Header';
 import Product from '../../components/product/Product';
@@ -8,15 +8,26 @@ import './ShopPage.css';
 const ShopPage = () => {
   const { products } = useProducts();
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    if (!modalVisible && selectedProduct) {
+      const timer = setTimeout(() => {
+        setSelectedProduct(null);
+      }, 200); // Depends on @keyframes HideModal (Modal.css)
+      return () => clearTimeout(timer);
+    }
+  }, [modalVisible, selectedProduct]);
 
   const handleProductClick = (product) => {
+    setModalVisible(true);
     setSelectedProduct(product);
-    document.body.style.overflow = 'hidden'; // Avoid scroll
+    document.body.setAttribute('data-scroll-locked', 1);
   };
 
   const handleCloseModal = () => {
-    setSelectedProduct(null);
-    document.body.style.overflow = 'auto'; // Enable scroll
+    setModalVisible(false);
+    document.body.removeAttribute('data-scroll-locked');
   };
 
   return (
@@ -40,7 +51,7 @@ const ShopPage = () => {
             );
           })}
           {selectedProduct && (
-            <Modal onClose={handleCloseModal}>
+            <Modal onClose={handleCloseModal} visible={modalVisible}>
               <div className="popover-content">
                 <h2>{selectedProduct.name}</h2>
                 <img src={selectedProduct.image} alt="Product image" />

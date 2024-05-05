@@ -9,13 +9,39 @@
   justify-content: center;
   align-items: center;
 }
-
 .modal-content {
   background-color: white;
+  color: #1e1e1e;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 10px #000000af;
   max-width: 80%;
   max-height: 80%;
   overflow: auto;
+  animation: ease 150ms ShowModal;
+}
+.modal-content.hidden {
+  animation: ease 200ms /* Depends on "timer" (ShopPage.jsx:15:12) */ HideModal;
+  opacity: 0;
+}
+
+@keyframes ShowModal {
+  from {
+    transform: scale(0.5) translateY(400px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes HideModal {
+  from {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.5) translateY(400px);
+    opacity: 0;
+  }
 }

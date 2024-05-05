@@ -1,4 +1,4 @@
-import './Product';
+import './Product.css';
 
 const Product = ({ id, image, name, rate, count, price, onClick }) => {
   // TODO: Add active styles

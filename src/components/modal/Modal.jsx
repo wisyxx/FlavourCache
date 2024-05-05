@@ -1,9 +1,15 @@
-import './Modal.css'
+import './Modal.css';
 
-const Modal = ({ children, onClose }) => {
+const Modal = ({ visible, children, onClose }) => {
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div
+      className={`modal-overlay ${visible ? '' : 'hidden'}`}
+      onClick={onClose}
+    >
+      <div
+        className={`modal-content ${visible ? '' : 'hidden'}`} // Exit animation
+        onClick={(e) => e.stopPropagation()}
+      >
         {children}
       </div>
     </div>

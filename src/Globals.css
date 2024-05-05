@@ -16,6 +16,11 @@ body {
   background-color: #111316;
   position: relative;
 }
+body[data-scroll-locked] {
+  overflow: hidden !important;
+  overscroll-behavior: contain;
+  padding-right: 17px !important;
+}
 h1 {
   font-size: 3.6rem;
 }
