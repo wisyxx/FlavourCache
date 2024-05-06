@@ -53,7 +53,10 @@ const ShopPage = () => {
           })}
           {selectedProduct && (
             <Modal onClose={handleCloseModal} visible={modalVisible}>
-              <Popover product={selectedProduct} closeBtnAction={handleCloseModal} />
+              <Popover
+                product={selectedProduct}
+                closeBtnAction={handleCloseModal}
+              />
             </Modal>
           )}
         </section>

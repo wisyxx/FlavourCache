@@ -1,7 +1,20 @@
+import { useState } from 'react';
 import Quantifier from '../quantifier/Quantifier';
 import './Popover.css';
 
 const Popover = ({ product, closeBtnAction }) => {
+  const [quantity, setQuantity] = useState(0);
+
+  // Product quantity
+  const handleAdd = () => {
+    setQuantity(quantity + 1);
+  };
+  const handleRemove = () => {
+    if (quantity > 0) {
+      setQuantity(quantity - 1);
+    }
+  };
+
   return (
     <div className="popover">
       <button className="popover__close" onClick={closeBtnAction}>
@@ -24,7 +37,11 @@ const Popover = ({ product, closeBtnAction }) => {
       </p>
       <div className="popover__actions">
         {/* TODO: button onClick action */}
-        <Quantifier />
+        <Quantifier
+          onAddClick={handleAdd}
+          onRemoveClick={handleRemove}
+          quantity={quantity}
+        />
         <button className="popover__actions--cart">Add to cart</button>
       </div>
     </div>

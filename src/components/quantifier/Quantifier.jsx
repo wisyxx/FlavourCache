@@ -1,13 +1,15 @@
-import { useState } from 'react';
 import './Quantifier.css';
 
-const Quantifier = () => {
-  const [quantity, setQuantity] = useState(0);
+const Quantifier = ({ onAddClick, onRemoveClick, quantity }) => {
   return (
     <div className="quantity">
-      <button className="quantity__remove">-</button>
+      <button onClick={onRemoveClick} className="quantity__remove">
+        -
+      </button>
       <p className="quantity__number">{quantity}</p>
-      <button className="quantity__add">+</button>
+      <button onClick={onAddClick} className="quantity__add">
+        +
+      </button>
     </div>
   );
 };

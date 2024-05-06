@@ -35,3 +35,8 @@
   outline: none;
   font-size: 2rem;
 }
+
+.popover__actions {
+  display: flex;
+  justify-content: center;
+}
