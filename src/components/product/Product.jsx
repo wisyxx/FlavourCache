@@ -8,10 +8,7 @@ const Product = ({ id, image, name, rate, count, price, onClick }) => {
         <img className="product__image" src={image} alt="Product image" />
         <p className="product__name">{name}</p>
         <p className="product__price">{price}€</p>
-        <div className="product__rating">
-          <p className="rating__rate">⭐{rate}</p>
-          <p className="rating__count">🗨️{count}</p>
-        </div>
+        <p className="product__rating">Rating: {`${rate}/5 (${count})`}</p>
       </div>
     </>
   );

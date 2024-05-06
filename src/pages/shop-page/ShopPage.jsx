@@ -3,6 +3,7 @@ import { useProducts } from '../../hooks/useProducts';
 import Header from '../../components/header/Header';
 import Product from '../../components/product/Product';
 import Modal from '../../components/modal/Modal';
+import Popover from '../../components/popover/Popover';
 import './ShopPage.css';
 
 const ShopPage = () => {
@@ -52,14 +53,7 @@ const ShopPage = () => {
           })}
           {selectedProduct && (
             <Modal onClose={handleCloseModal} visible={modalVisible}>
-              <div className="popover-content">
-                <h2>{selectedProduct.name}</h2>
-                <img src={selectedProduct.image} alt="Product image" />
-                <p>Price: {selectedProduct.price}€</p>
-                <p>Rating: ⭐{selectedProduct.rate}</p>
-                <p>Reviews: 🗨️{selectedProduct.count}</p>
-                <button onClick={handleCloseModal}>Close</button>
-              </div>
+              <Popover product={selectedProduct} closeBtnAction={handleCloseModal} />
             </Modal>
           )}
         </section>

@@ -8,20 +8,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 150ms;
 }
 .modal-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   background-color: white;
   color: #1e1e1e;
-  padding: 20px;
+  padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0px 0px 10px #000000af;
-  max-width: 80%;
-  max-height: 80%;
+  width: 40rem;
+  scrollbar-width: none;
   overflow: auto;
   animation: ease 150ms ShowModal;
 }
 .modal-content.hidden {
   animation: ease 200ms /* Depends on "timer" (ShopPage.jsx:15:12) */ HideModal;
+  opacity: 0;
+}
+.modal-overlay.hidden {
   opacity: 0;
 }
 
