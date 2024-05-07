@@ -18,8 +18,8 @@
   background-color: white;
   color: #1e1e1e;
   padding: 2rem;
+  max-width: 30rem;
   border-radius: 8px;
-  width: 40rem;
   scrollbar-width: none;
   overflow: auto;
   animation: ease 150ms ShowModal;
