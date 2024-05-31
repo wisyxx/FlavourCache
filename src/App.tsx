@@ -1,6 +1,7 @@
 import { IconButton } from '@chakra-ui/react';
 import { NotebookPen } from 'lucide-react';
 import { CategoryList } from './components/CategoryList';
+import { RecipeList } from './components/RecipeList';
 
 export const App = () => {
   return (
@@ -26,6 +27,7 @@ export const App = () => {
 
       <main className=" flex gap-5 p-10">
         <CategoryList />
+        <RecipeList />
       </main>
     </>
   );
