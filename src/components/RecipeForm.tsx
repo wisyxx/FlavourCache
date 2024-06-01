@@ -9,13 +9,17 @@ import {
   useDisclosure,
   Button,
   IconButton,
+  Input,
+  FormLabel,
 } from '@chakra-ui/react';
 import { NotebookPen } from 'lucide-react';
+import { FormEvent } from 'react';
 
 export const RecipeForm = () => {
   const { onOpen, onClose, isOpen } = useDisclosure();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     onClose();
     // dispatch({}); TODO
   };
@@ -39,18 +43,37 @@ export const RecipeForm = () => {
         Button
       </IconButton>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal size="xl" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader fontWeight="bold">Add new recipe</ModalHeader>
           <ModalCloseButton />
-          <ModalBody></ModalBody>
+          <ModalBody>
+            <form onSubmit={handleSubmit} className="space-y-3">
+              <div>
+                <FormLabel>Name</FormLabel>
+                <Input type="text" size="md" placeholder="Recipe name" />
+              </div>
 
-          <ModalFooter>
-            <Button type="submit" colorScheme="blue" onClick={handleSubmit}>
-              Add
-            </Button>
-          </ModalFooter>
+              <div>
+                <FormLabel>Ingredient 1</FormLabel>
+                <Input
+                  type="text"
+                  size="md"
+                  placeholder="Ex: Flour, 1/2 Onion..."
+                />
+              </div>
+
+              <Button
+                className="w-full"
+                type="submit"
+                colorScheme="blue"
+                onClick={onClose}
+              >
+                Add
+              </Button>
+            </form>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>
