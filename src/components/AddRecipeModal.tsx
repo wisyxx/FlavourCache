@@ -8,8 +8,18 @@ import {
   IconButton,
 } from '@chakra-ui/react';
 import { NotebookPen } from 'lucide-react';
+import { useRecipe } from '../hooks/useRecipe';
+import { RecipeForm } from './RecipeForm';
+import { initialState } from '../reducers/recipeReducer';
 
 export const AddRecipeModal = () => {
+  const { onOpen, onClose, isOpen, state } = useRecipe();
+
+  const handleClose = () => {
+    onClose();
+    state.ingredients = initialState.ingredients;
+  };
+
   return (
     <>
       <IconButton
@@ -29,12 +39,19 @@ export const AddRecipeModal = () => {
         Button
       </IconButton>
 
-      <Modal size="xl" isOpen={isOpen} onClose={onClose}>
+      <Modal
+        onCloseComplete={handleClose}
+        size="xl"
+        isOpen={isOpen}
+        onClose={onClose}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader fontWeight="bold">Add new recipe</ModalHeader>
           <ModalCloseButton />
-          <ModalBody></ModalBody>
+          <ModalBody>
+            <RecipeForm />
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>

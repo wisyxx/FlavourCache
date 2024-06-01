@@ -1,28 +1,45 @@
-import { Box, Button, Input, FormLabel, Textarea } from '@chakra-ui/react';
 import { FormEvent } from 'react';
+import { useRecipe } from '../hooks/useRecipe';
+import { Box, Button, Input, FormLabel, Textarea } from '@chakra-ui/react';
+import { NewIngredient } from './NewIngredient';
 
 export const RecipeForm = () => {
+  const { onClose, state, dispatch } = useRecipe();
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
     onClose();
     // dispatch({}); TODO
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3">
+    <form onSubmit={handleSubmit} className="space-y-3 p-3">
       <Box>
         <FormLabel>Name *</FormLabel>
-        <Input type="text" size="md" placeholder="Recipe name" />
+        <Input name="name" type="text" size="md" placeholder="Recipe name" />
       </Box>
 
-      <Box>
-        <FormLabel>Ingredient 1</FormLabel>
-        <Input type="text" size="md" placeholder="Ex: Flour, 1/2 Onion..." />
+      <Box className="space-y-3">
+        {state.ingredients.map((ingredient) => (
+          <NewIngredient
+            key={ingredient.id}
+            name={ingredient.name}
+            id={ingredient.id}
+          />
+        ))}
+        <Button
+          onClick={() => dispatch({ type: 'add-ingredient' })}
+          colorScheme="blue"
+        >
+          Add ingredient
+        </Button>
       </Box>
 
       <Box>
         <FormLabel>Instructions</FormLabel>
-        <Textarea placeholder="Ex: First add all dry ingredients..." />
+        <Textarea
+          className=" resize-none"
+          placeholder="Ex: First add all dry ingredients..."
+        />
       </Box>
 
       <Button

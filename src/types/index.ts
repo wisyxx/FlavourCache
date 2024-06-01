@@ -1,4 +1,8 @@
 type Category = {
-    id: string
-    name: string
-}
+  id: string;
+  name: string;
+};
+type Ingredient = {
+  id: string;
+  name: string;
+};
