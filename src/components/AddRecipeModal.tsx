@@ -3,14 +3,13 @@ import {
   ModalBody,
   ModalOverlay,
   ModalContent,
-  ModalHeader, ModalCloseButton,
-  useDisclosure, IconButton
+  ModalHeader,
+  ModalCloseButton,
+  IconButton,
 } from '@chakra-ui/react';
 import { NotebookPen } from 'lucide-react';
 
 export const AddRecipeModal = () => {
-  const { onOpen, onClose, isOpen } = useDisclosure();
-  
   return (
     <>
       <IconButton
