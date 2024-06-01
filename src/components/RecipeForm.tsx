@@ -1,7 +1,15 @@
 import { FormEvent } from 'react';
 import { useRecipe } from '../hooks/useRecipe';
-import { Box, Button, Input, FormLabel, Textarea } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Input,
+  FormLabel,
+  Textarea,
+  IconButton,
+} from '@chakra-ui/react';
 import { NewIngredient } from './NewIngredient';
+import { Plus } from 'lucide-react';
 
 export const RecipeForm = () => {
   const { onClose, state, dispatch } = useRecipe();
@@ -26,23 +34,35 @@ export const RecipeForm = () => {
             id={ingredient.id}
           />
         ))}
-        <Button
+        <IconButton
+          bg="#ff8b00"
+          _hover={{
+            backgroundColor: '#ffc60b',
+          }}
+          isRound={true}
+          aria-label="Add ingredient"
+          icon={<Plus />}
           onClick={() => dispatch({ type: 'add-ingredient' })}
           colorScheme="blue"
         >
           Add ingredient
-        </Button>
+        </IconButton>
       </Box>
 
       <Box>
         <FormLabel>Instructions</FormLabel>
         <Textarea
+          h='150'
           className=" resize-none"
           placeholder="Ex: First add all dry ingredients..."
         />
       </Box>
 
       <Button
+        bg="#ff8b00"
+        _hover={{
+          backgroundColor: '#ffc60b',
+        }}
         className="w-full"
         type="submit"
         colorScheme="blue"

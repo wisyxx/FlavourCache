@@ -46,7 +46,7 @@ export const AddRecipeModal = () => {
         onClose={onClose}
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg="#feffdb">
           <ModalHeader fontWeight="bold">Add new recipe</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
