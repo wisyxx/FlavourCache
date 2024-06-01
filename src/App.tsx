@@ -1,28 +1,13 @@
-import { IconButton } from '@chakra-ui/react';
-import { NotebookPen } from 'lucide-react';
 import { CategoryList } from './components/CategoryList';
 import { RecipeList } from './components/RecipeList';
+import { RecipeForm } from './components/RecipeForm';
 
 export const App = () => {
   return (
     <>
       <header className=" bg-orange-500 p-4 flex justify-between">
         <h1 className=" text-white font-black text-4xl">FlavourCache</h1>
-        <IconButton
-          aria-label="New recipe"
-          bg="#444444"
-          size="lg"
-          isRound={true}
-          _hover={{
-            background: '#ffc60b',
-          }}
-          _active={{
-            background: '#ffdb66',
-          }}
-          icon={<NotebookPen className=" text-white" />}
-        >
-          Button
-        </IconButton>
+        <RecipeForm />
       </header>
 
       <main className=" flex gap-5 p-10">
