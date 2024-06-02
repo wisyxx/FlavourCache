@@ -1,6 +1,7 @@
 export type RecipeActions =
   | { type: 'add-category'; payload: { category: Category } }
-  | { type: 'add-ingredient' };
+  | { type: 'add-ingredient' }
+  | { type: 'remove-ingredient'; payload: { id: Ingredient['id'] } };
 
 export type RecipeState = {
   recipes: [];
@@ -30,6 +31,16 @@ export const recipeReducer = (
         ...state.ingredients,
         { id: (state.ingredients.length + 1).toString(), name: 'Ingredient' },
       ],
+    };
+  }
+  if (action.type === 'remove-ingredient') {
+    const ingredients = state.ingredients.filter(
+      (ingredient) => ingredient.id !== action.payload.id
+    );
+
+    return {
+      ...state,
+      ingredients,
     };
   }
 
