@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export type RecipeActions =
   | { type: 'add-category'; payload: { category: Category } }
   | { type: 'add-ingredient' }
@@ -12,7 +14,7 @@ export type RecipeState = {
 export const initialState: RecipeState = {
   recipes: [],
   categories: [],
-  ingredients: [{ id: '1', name: 'Ingredient' }],
+  ingredients: [{ id: 'DEFAULT', name: 'Ingredient' }],
 };
 
 export const recipeReducer = (
@@ -27,10 +29,7 @@ export const recipeReducer = (
   if (action.type === 'add-ingredient') {
     return {
       ...state,
-      ingredients: [
-        ...state.ingredients,
-        { id: (state.ingredients.length + 1).toString(), name: 'Ingredient' },
-      ],
+      ingredients: [...state.ingredients, { id: uuidv4(), name: 'Ingredient' }],
     };
   }
   if (action.type === 'remove-ingredient') {

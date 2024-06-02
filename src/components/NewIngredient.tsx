@@ -12,16 +12,17 @@ export const NewIngredient = ({ id, name }: NewIngredientProps) => {
 
   return (
     <Box>
-      <FormLabel>{` ${name} ${id}`}</FormLabel>
+      <FormLabel htmlFor={id}>{name}</FormLabel>
 
       <Box className=" flex gap-4 items-center">
         <Input
-          name={`${name}-${id}`}
+          name={name}
+          id={id}
           type="text"
           size="md"
           placeholder="Ex: Flour, cocoa powder..."
         />
-        {+id > 1 ? (
+        {id !== 'DEFAULT' ? (
           <IconButton
             onClick={() =>
               dispatch({ type: 'remove-ingredient', payload: { id } })

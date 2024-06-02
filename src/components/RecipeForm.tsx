@@ -22,8 +22,8 @@ export const RecipeForm = () => {
   return (
     <form onSubmit={handleSubmit} className="space-y-3 p-3">
       <Box>
-        <FormLabel>Name *</FormLabel>
-        <Input name="name" type="text" size="md" placeholder="Recipe name" />
+        <FormLabel htmlFor="name">Name *</FormLabel>
+        <Input name="name" id='name' type="text" size="md" placeholder="Recipe name" />
       </Box>
 
       <Box className="space-y-3">
@@ -52,7 +52,7 @@ export const RecipeForm = () => {
       <Box>
         <FormLabel>Instructions</FormLabel>
         <Textarea
-          h='150'
+          h="150"
           className=" resize-none"
           placeholder="Ex: First add all dry ingredients..."
         />
