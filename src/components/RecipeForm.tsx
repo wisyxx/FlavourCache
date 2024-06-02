@@ -1,5 +1,6 @@
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useRecipe } from '../hooks/useRecipe';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Box,
   Button,
@@ -13,13 +14,25 @@ import { Plus } from 'lucide-react';
 import { DraftRecipe } from '../types';
 
 export const RecipeForm = () => {
-  const { onClose, state, dispatch } = useRecipe();
+  const { state, dispatch, onClose } = useRecipe();
   const [error, setError] = useState('');
   const [recipe, setRecipe] = useState<DraftRecipe>({
     name: '',
     ingredients: [],
     instructions: '',
   });
+
+  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+
+    const ingredients = state.ingredients.map((ingredient) => ingredient);
+
+    setRecipe({
+      ...recipe,
+      ingredients,
+      [name]: value,
+    });
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,6 +43,7 @@ export const RecipeForm = () => {
     }
 
     dispatch({ type: 'add-recipe', payload: { recipe } });
+    onClose();
   };
 
   return (
@@ -40,6 +54,7 @@ export const RecipeForm = () => {
       <Box>
         <FormLabel htmlFor="name">Name *</FormLabel>
         <Input
+          onChange={onChange}
           autoComplete="given-name"
           name="name"
           id="name"
@@ -73,6 +88,7 @@ export const RecipeForm = () => {
       <Box>
         <FormLabel htmlFor="instructions">Instructions</FormLabel>
         <Textarea
+          onChange={onChange}
           name="instructions"
           id="instructions"
           h="150"

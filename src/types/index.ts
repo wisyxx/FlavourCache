@@ -4,7 +4,8 @@ export type Category = {
 };
 export type Ingredient = {
   id: string;
-  name: string;
+  name: string; // The name of the input
+  value: string;
 };
 export type DraftRecipe = {
   name: string;
