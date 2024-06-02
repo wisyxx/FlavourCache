@@ -1,8 +1,8 @@
-type Category = {
+export type Category = {
   id: string;
   name: string;
 };
-type Ingredient = {
+export type Ingredient = {
   id: string;
   name: string;
 };

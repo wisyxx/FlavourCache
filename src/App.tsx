@@ -10,7 +10,7 @@ export const App = () => {
         <AddRecipeModal />
       </header>
 
-      <main className=" flex flex-col md:flex-row gap-5 p-10">
+      <main className=" bg-[#feffdb] h-[89vh] flex flex-col md:flex-row gap-5 p-10">
         <CategoryList />
         <RecipeList />
       </main>

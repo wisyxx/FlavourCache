@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { useRecipe } from '../hooks/useRecipe';
 import {
   Box,
@@ -10,12 +10,22 @@ import {
 } from '@chakra-ui/react';
 import { NewIngredient } from './NewIngredient';
 import { Plus } from 'lucide-react';
+import type { Ingredient } from '../types';
 
 export const RecipeForm = () => {
   const { onClose, state, dispatch } = useRecipe();
+  const [error, setError] = useState();
+  const [recipe, setRecipe] = useState({
+    name: '',
+    ingredients: [],
+    instructions: '',
+  });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     onClose();
+
+    if (Object.values(recipe).includes('')) {
+    }
     // dispatch({}); TODO
   };
 
@@ -23,7 +33,14 @@ export const RecipeForm = () => {
     <form onSubmit={handleSubmit} className="space-y-3 p-3">
       <Box>
         <FormLabel htmlFor="name">Name *</FormLabel>
-        <Input name="name" id='name' type="text" size="md" placeholder="Recipe name" />
+        <Input
+          autoComplete="given-name"
+          name="name"
+          id="name"
+          type="text"
+          size="md"
+          placeholder="Recipe name"
+        />
       </Box>
 
       <Box className="space-y-3">
@@ -50,8 +67,10 @@ export const RecipeForm = () => {
       </Box>
 
       <Box>
-        <FormLabel>Instructions</FormLabel>
+        <FormLabel htmlFor="instructions">Instructions</FormLabel>
         <Textarea
+          name="instructions"
+          id="instructions"
           h="150"
           className=" resize-none"
           placeholder="Ex: First add all dry ingredients..."
