@@ -16,7 +16,6 @@ export const AddRecipeModal = () => {
   const { onOpen, onClose, isOpen, state } = useRecipe();
 
   const handleClose = () => {
-    onClose();
     state.ingredients = initialState.ingredients;
   };
 

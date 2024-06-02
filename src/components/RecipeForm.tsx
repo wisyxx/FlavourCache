@@ -10,27 +10,33 @@ import {
 } from '@chakra-ui/react';
 import { NewIngredient } from './NewIngredient';
 import { Plus } from 'lucide-react';
-import type { Ingredient } from '../types';
+import { DraftRecipe } from '../types';
 
 export const RecipeForm = () => {
   const { onClose, state, dispatch } = useRecipe();
-  const [error, setError] = useState();
-  const [recipe, setRecipe] = useState({
+  const [error, setError] = useState('');
+  const [recipe, setRecipe] = useState<DraftRecipe>({
     name: '',
     ingredients: [],
     instructions: '',
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    onClose();
+    e.preventDefault();
 
     if (Object.values(recipe).includes('')) {
+      setError('You must fill all fields');
+      return;
     }
-    // dispatch({}); TODO
+
+    dispatch({ type: 'add-recipe', payload: { recipe } });
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3 p-3">
+      {error && (
+        <p className="w-full bg-red-500 text-white font-bold p-2">{error}</p>
+      )}
       <Box>
         <FormLabel htmlFor="name">Name *</FormLabel>
         <Input
@@ -61,9 +67,7 @@ export const RecipeForm = () => {
           icon={<Plus />}
           onClick={() => dispatch({ type: 'add-ingredient' })}
           colorScheme="blue"
-        >
-          Add ingredient
-        </IconButton>
+        ></IconButton>
       </Box>
 
       <Box>
@@ -78,14 +82,13 @@ export const RecipeForm = () => {
       </Box>
 
       <Button
+        type="submit"
         bg="#ff8b00"
         _hover={{
           backgroundColor: '#ffc60b',
         }}
         className="w-full"
-        type="submit"
         colorScheme="blue"
-        onClick={onClose}
       >
         Add
       </Button>

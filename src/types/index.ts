@@ -11,3 +11,9 @@ export type DraftRecipe = {
   ingredients: Ingredient[];
   instructions: string;
 };
+export type Recipe = {
+  id: string;
+  name: string;
+  ingredients: Ingredient[];
+  instructions: string;
+};
