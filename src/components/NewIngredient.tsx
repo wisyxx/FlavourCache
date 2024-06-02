@@ -1,6 +1,7 @@
 import { Box, FormLabel, IconButton, Input } from '@chakra-ui/react';
 import { Minus } from 'lucide-react';
 import { useRecipe } from '../hooks/useRecipe';
+import { Ingredient } from '../types';
 
 type NewIngredientProps = {
   id: Ingredient['id'];
