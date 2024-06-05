@@ -17,8 +17,13 @@ export type RecipeState = {
   ingredients: Ingredient[];
 };
 
+const initialRecipes = (): Recipe[] => {
+  const recipes = localStorage.getItem('recipes');
+  return recipes ? JSON.parse(recipes) : [];
+};
+
 export const initialState: RecipeState = {
-  recipes: [],
+  recipes: initialRecipes(),
   categories: [],
   ingredients: [{ id: 'DEFAULT', name: 'Ingredient', value: '' }],
 };

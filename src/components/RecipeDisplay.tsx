@@ -13,32 +13,34 @@ type RecipeDisplayProps = {
 };
 
 export const RecipeDisplay = ({ recipe }: RecipeDisplayProps) => {
-  const { name, ingredients, instructions } = recipe;
+  const { name, instructions, ingredients } = recipe;
 
   return (
-    <div className="shadow-xl p-4 rounded-lg w-[90%]">
-      <h1 className="text-2xl font-bold">{name}</h1>
-
-      <Accordion defaultIndex={[0]} allowMultiple>
+    <div className="shadow-xl p-6 rounded-lg w-full bg-[#ffa335]">
+      <h1 className="text-2xl font-bold mb-2">{name}</h1>
+      <Accordion allowMultiple>
         <AccordionItem>
-          <AccordionItem>
-            <h2>
-              <AccordionButton>
-                <Box as="span" className="flex-1 text-left font-bold text-md">
-                  Ingredients
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel pb={4}>
-              {ingredients.map((ingredient) => (
-                <p>{ingredient.value}</p>
-              ))}
-            </AccordionPanel>
-          </AccordionItem>
-
           <h2>
-            <AccordionButton>
+            <AccordionButton _expanded={{ backgroundColor: '#ffba69' }}>
+              <Box as="span" className="flex-1 text-left font-bold text-md">
+                Ingredients
+              </Box>
+              2
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel className="flex justify-start items-center ml-5">
+            <Box as="ul" className="list-decimal">
+              {ingredients.map((ingredient) => (
+                <li key={ingredient.id}>{ingredient.value}</li>
+              ))}
+            </Box>
+          </AccordionPanel>
+        </AccordionItem>
+
+        <AccordionItem>
+          <h2>
+            <AccordionButton _expanded={{ backgroundColor: '#ffba69' }}>
               <Box as="span" className="flex-1 text-left font-bold text-md">
                 Instructions
               </Box>
@@ -46,7 +48,7 @@ export const RecipeDisplay = ({ recipe }: RecipeDisplayProps) => {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-            <p>{instructions}</p>
+            <Box as="p">{instructions}</Box>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
