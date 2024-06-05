@@ -25,7 +25,6 @@ export const RecipeDisplay = ({ recipe }: RecipeDisplayProps) => {
               <Box as="span" className="flex-1 text-left font-bold text-md">
                 Ingredients
               </Box>
-              2
               <AccordionIcon />
             </AccordionButton>
           </h2>
