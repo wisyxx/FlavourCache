@@ -1,3 +1,5 @@
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import { PenIcon, Trash2 } from 'lucide-react';
 import { Recipe } from '../types';
 import {
@@ -9,21 +11,93 @@ import {
   Box,
   IconButton,
 } from '@chakra-ui/react';
+import { useRecipe } from '../hooks/useRecipe';
+import 'animate.css';
 
 type RecipeDisplayProps = {
   recipe: Recipe;
 };
 
 export const RecipeDisplay = ({ recipe }: RecipeDisplayProps) => {
-  const { name, instructions, ingredients } = recipe;
+  const SweetAlert = withReactContent(Swal);
+
+  const { dispatch } = useRecipe();
+  const { name, instructions, ingredients, id } = recipe;
+
+  const handleDelete = () => {
+    SweetAlert.fire({
+      title: <p>Are you sure?</p>,
+      icon: 'question',
+      confirmButtonColor: '#ff8b00',
+      confirmButtonText: 'Delete',
+      showCancelButton: true,
+      cancelButtonColor: '#444444',
+      cancelButtonText: 'Cancel',
+      /* Custom animations with animate.css */
+      showClass: {
+        popup: `
+              animate__animated
+              animate__fadeIn
+              animate__faster
+           `,
+      },
+      hideClass: {
+        popup: `
+              animate__animated
+              animate__fadeOut
+              animate__faster
+           `,
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch({ type: 'remove-recipe', payload: { id } });
+
+        SweetAlert.fire({
+          title: <p>Recipe successfully deleted</p>,
+          toast: true,
+          position: 'top-end',
+          icon: 'success',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          /* Custom animations with animate.css */
+          showClass: {
+            popup: `
+              animate__animated
+              animate__backInRight
+              animate__fast
+           `,
+          },
+          hideClass: {
+            popup: `
+              animate__animated
+              animate__backOutRight
+              animate__fast
+           `,
+          },
+        });
+      }
+    });
+  };
 
   return (
     <div className="shadow-xl p-6 rounded-lg w-full bg-[#ffa335]">
       <div className="flex justify-between items-center mb-5">
         <h1 className="text-2xl font-bold mb-2">{name}</h1>
         <div className="flex gap-4">
-          <IconButton aria-label="edit recipe" icon={<PenIcon />} />
-          <IconButton aria-label="edit recipe" icon={<Trash2 />} />
+          <IconButton
+            isRound
+            colorScheme="yellow"
+            aria-label="edit recipe"
+            icon={<PenIcon />}
+          />
+          <IconButton
+            onClick={handleDelete}
+            isRound
+            colorScheme="red"
+            aria-label="delete recipe"
+            icon={<Trash2 />}
+          />
         </div>
       </div>
       <Accordion allowMultiple>

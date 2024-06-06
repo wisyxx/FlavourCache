@@ -4,6 +4,7 @@ import { Ingredient, Category, Recipe, DraftRecipe } from '../types';
 export type RecipeActions =
   | { type: 'add-recipe'; payload: { recipe: DraftRecipe } }
   | { type: 'add-ingredient' }
+  | { type: 'remove-recipe'; payload: { id: Recipe['id'] } }
   | {
       type: 'set-ingredient-value';
       payload: { value: Ingredient['value']; id: Ingredient['id'] };
@@ -68,6 +69,16 @@ export const recipeReducer = (
     return {
       ...state,
       recipes: [...state.recipes, createRecipe(action.payload.recipe)],
+    };
+  }
+  if (action.type === 'remove-recipe') {
+    const recipes = state.recipes.filter(
+      (recipe) => recipe.id !== action.payload.id
+    );
+
+    return {
+      ...state,
+      recipes,
     };
   }
   if (action.type === 'set-ingredient-value') {
