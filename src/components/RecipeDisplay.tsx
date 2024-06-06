@@ -1,3 +1,4 @@
+import { PenIcon, Trash2 } from 'lucide-react';
 import { Recipe } from '../types';
 import {
   Accordion,
@@ -6,6 +7,7 @@ import {
   AccordionPanel,
   AccordionIcon,
   Box,
+  IconButton,
 } from '@chakra-ui/react';
 
 type RecipeDisplayProps = {
@@ -17,7 +19,13 @@ export const RecipeDisplay = ({ recipe }: RecipeDisplayProps) => {
 
   return (
     <div className="shadow-xl p-6 rounded-lg w-full bg-[#ffa335]">
-      <h1 className="text-2xl font-bold mb-2">{name}</h1>
+      <div className="flex justify-between items-center mb-5">
+        <h1 className="text-2xl font-bold mb-2">{name}</h1>
+        <div className="flex gap-4">
+          <IconButton aria-label="edit recipe" icon={<PenIcon />} />
+          <IconButton aria-label="edit recipe" icon={<Trash2 />} />
+        </div>
+      </div>
       <Accordion allowMultiple>
         <AccordionItem>
           <h2>
