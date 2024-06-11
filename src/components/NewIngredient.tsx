@@ -7,10 +7,11 @@ import { Ingredient } from '../types';
 type NewIngredientProps = {
   id: Ingredient['id'];
   name: Ingredient['name'];
+  value?: Ingredient['value'];
 };
 
-export const NewIngredient = ({ id, name }: NewIngredientProps) => {
-  const { dispatch } = useRecipe();
+export const NewIngredient = ({ id, name, value }: NewIngredientProps) => {
+  const { state, dispatch } = useRecipe();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -25,6 +26,7 @@ export const NewIngredient = ({ id, name }: NewIngredientProps) => {
 
       <Box className=" flex gap-4 items-center">
         <Input
+          value={value}
           onChange={onChange}
           name={name}
           id={id}
@@ -35,7 +37,10 @@ export const NewIngredient = ({ id, name }: NewIngredientProps) => {
         {id !== 'DEFAULT' ? (
           <IconButton
             onClick={() =>
-              dispatch({ type: 'remove-ingredient', payload: { id } })
+              dispatch({
+                type: 'remove-ingredient',
+                payload: { id },
+              })
             }
             aria-label="delete ingredient"
             icon={<Minus />}

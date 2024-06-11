@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useRecipe } from '../hooks/useRecipe';
 import {
   Box,
@@ -20,6 +20,36 @@ export const RecipeForm = () => {
     ingredients: [],
     instructions: '',
   });
+
+  useEffect(() => {
+    if (state.editingId) {
+      const editingRecipe = state.recipes.filter(
+        (recipe) => recipe.id === state.editingId
+      )[0];
+
+      setRecipe(editingRecipe);
+    }
+  }, [state.editingId]);
+
+  const setIngredients = () => {
+    if (state.editingId) {
+      return recipe.ingredients.map((ingredient) => (
+        <NewIngredient
+          key={ingredient.id}
+          name={ingredient.name}
+          value={ingredient.value}
+          id={ingredient.id}
+        />
+      ));
+    } else
+      return state.ingredients.map((ingredient) => (
+        <NewIngredient
+          key={ingredient.id}
+          name={ingredient.name}
+          id={ingredient.id}
+        />
+      ));
+  };
 
   const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -60,17 +90,12 @@ export const RecipeForm = () => {
           type="text"
           size="md"
           placeholder="Recipe name"
+          value={recipe.name}
         />
       </Box>
 
       <Box className="space-y-3">
-        {state.ingredients.map((ingredient) => (
-          <NewIngredient
-            key={ingredient.id}
-            name={ingredient.name}
-            id={ingredient.id}
-          />
-        ))}
+        {setIngredients()}
         <IconButton
           bg="#ff8b00"
           _hover={{

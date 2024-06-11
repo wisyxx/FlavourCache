@@ -21,8 +21,16 @@ type RecipeDisplayProps = {
 export const RecipeDisplay = ({ recipe }: RecipeDisplayProps) => {
   const SweetAlert = withReactContent(Swal);
 
-  const { dispatch } = useRecipe();
+  const { dispatch, onOpen } = useRecipe();
   const { name, instructions, ingredients, id } = recipe;
+
+  const handleEdit = () => {
+    dispatch({
+      type: 'set-editing-id',
+      payload: { id },
+    });
+    onOpen();
+  };
 
   const handleDelete = () => {
     SweetAlert.fire({
@@ -86,6 +94,7 @@ export const RecipeDisplay = ({ recipe }: RecipeDisplayProps) => {
         <h1 className="text-2xl font-bold mb-2">{name}</h1>
         <div className="flex gap-4">
           <IconButton
+            onClick={handleEdit}
             isRound
             colorScheme="yellow"
             aria-label="edit recipe"

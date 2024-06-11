@@ -3,6 +3,7 @@ import { Ingredient, Category, Recipe, DraftRecipe } from '../types';
 
 export type RecipeActions =
   | { type: 'add-recipe'; payload: { recipe: DraftRecipe } }
+  | { type: 'set-editing-id'; payload: { id: Recipe['id'] } }
   | { type: 'add-ingredient' }
   | { type: 'remove-recipe'; payload: { id: Recipe['id'] } }
   | {
@@ -16,6 +17,7 @@ export type RecipeState = {
   recipes: Recipe[];
   categories: Category[];
   ingredients: Ingredient[];
+  editingId: Recipe['id'];
 };
 
 const initialRecipes = (): Recipe[] => {
@@ -27,6 +29,7 @@ export const initialState: RecipeState = {
   recipes: initialRecipes(),
   categories: [],
   ingredients: [{ id: 'DEFAULT', name: 'Ingredient', value: '' }],
+  editingId: '',
 };
 
 /* Adds an ID to the recipe  */
@@ -89,6 +92,12 @@ export const recipeReducer = (
           ? { ...ingredient, value: action.payload.value }
           : ingredient
       ),
+    };
+  }
+  if (action.type === 'set-editing-id') {
+    return {
+      ...state,
+      editingId: action.payload.id,
     };
   }
 
