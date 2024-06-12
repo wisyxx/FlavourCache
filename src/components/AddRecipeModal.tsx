@@ -10,13 +10,12 @@ import {
 import { NotebookPen } from 'lucide-react';
 import { useRecipe } from '../hooks/useRecipe';
 import { RecipeForm } from './RecipeForm';
-import { initialState } from '../reducers/recipeReducer';
 
 export const AddRecipeModal = () => {
-  const { onOpen, onClose, isOpen, state } = useRecipe();
+  const { onOpen, onClose, isOpen, dispatch } = useRecipe();
 
   const handleClose = () => {
-    state.ingredients = initialState.ingredients;
+    dispatch({type: 'remove-editinId'});
   };
 
   return (

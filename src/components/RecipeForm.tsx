@@ -11,10 +11,14 @@ import {
 import { NewIngredient } from './NewIngredient';
 import { Plus } from 'lucide-react';
 import { DraftRecipe } from '../types';
+import { v4 as uuidv4 } from 'uuid';
 
 export const RecipeForm = () => {
   const { state, dispatch, onClose } = useRecipe();
   const [error, setError] = useState('');
+  const [draftIngredients, setDraftIngredients] = useState([
+    { id: 'DEFAULT', name: 'Ingredient', value: '' },
+  ]);
   const [recipe, setRecipe] = useState<DraftRecipe>({
     name: '',
     ingredients: [],
@@ -31,7 +35,7 @@ export const RecipeForm = () => {
     }
   }, [state.editingId]);
 
-  const setIngredients = () => {
+  const setIngredientInputs = () => {
     if (state.editingId) {
       return recipe.ingredients.map((ingredient) => (
         <NewIngredient
@@ -39,14 +43,18 @@ export const RecipeForm = () => {
           name={ingredient.name}
           value={ingredient.value}
           id={ingredient.id}
+          draftIngredients={draftIngredients}
+          setDraftIngredients={setDraftIngredients}
         />
       ));
     } else
-      return state.ingredients.map((ingredient) => (
+      return draftIngredients.map((ingredient) => (
         <NewIngredient
           key={ingredient.id}
           name={ingredient.name}
           id={ingredient.id}
+          draftIngredients={draftIngredients}
+          setDraftIngredients={setDraftIngredients}
         />
       ));
   };
@@ -54,13 +62,20 @@ export const RecipeForm = () => {
   const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
-    const ingredients = state.ingredients.map((ingredient) => ingredient);
+    const ingredients = draftIngredients.map((ingredient) => ingredient);
 
     setRecipe({
       ...recipe,
       ingredients,
       [name]: value,
     });
+  };
+
+  const handleAddIngredient = () => {
+    setDraftIngredients([
+      ...draftIngredients,
+      { id: uuidv4(), name: 'Ingredient', value: '' },
+    ]);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -95,7 +110,7 @@ export const RecipeForm = () => {
       </Box>
 
       <Box className="space-y-3">
-        {setIngredients()}
+        {setIngredientInputs()}
         <IconButton
           bg="#ff8b00"
           _hover={{
@@ -104,7 +119,7 @@ export const RecipeForm = () => {
           isRound={true}
           aria-label="Add ingredient"
           icon={<Plus />}
-          onClick={() => dispatch({ type: 'add-ingredient' })}
+          onClick={handleAddIngredient}
           colorScheme="blue"
         ></IconButton>
       </Box>

@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, Dispatch } from 'react';
 import { Box, FormLabel, IconButton, Input } from '@chakra-ui/react';
 import { Minus } from 'lucide-react';
 import { useRecipe } from '../hooks/useRecipe';
@@ -8,16 +8,41 @@ type NewIngredientProps = {
   id: Ingredient['id'];
   name: Ingredient['name'];
   value?: Ingredient['value'];
+  draftIngredients: Ingredient[];
+  setDraftIngredients: Dispatch<
+    React.SetStateAction<
+      {
+        id: string;
+        name: string;
+        value: string;
+      }[]
+    >
+  >;
 };
 
-export const NewIngredient = ({ id, name, value }: NewIngredientProps) => {
-  const { state, dispatch } = useRecipe();
-
+export const NewIngredient = ({
+  id,
+  name,
+  value,
+  setDraftIngredients,
+  draftIngredients,
+}: NewIngredientProps) => {
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: 'set-ingredient-value',
-      payload: { id, value: e.target.value },
+    console.log(e.target.value);
+    const updatedValueIngredients = draftIngredients.map((ingredient) => {
+      if (ingredient.id === id) {
+        ingredient.value === e.target.value;
+      }
+      return ingredient;
     });
+    setDraftIngredients(updatedValueIngredients);
+  };
+
+  const handleDeleteIngredient = () => {
+    const updatedIngredients = draftIngredients.filter(
+      (ingredient) => ingredient.id !== id
+    );
+    setDraftIngredients(updatedIngredients);
   };
 
   return (
@@ -36,12 +61,7 @@ export const NewIngredient = ({ id, name, value }: NewIngredientProps) => {
         />
         {id !== 'DEFAULT' ? (
           <IconButton
-            onClick={() =>
-              dispatch({
-                type: 'remove-ingredient',
-                payload: { id },
-              })
-            }
+            onClick={handleDeleteIngredient}
             aria-label="delete ingredient"
             icon={<Minus />}
             colorScheme="red"
