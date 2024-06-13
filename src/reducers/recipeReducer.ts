@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Ingredient, Category, Recipe, DraftRecipe } from '../types';
+import { Category, Recipe, DraftRecipe } from '../types';
 
 export type RecipeActions =
   | { type: 'add-recipe'; payload: { recipe: DraftRecipe } }
   | { type: 'set-editing-id'; payload: { id: Recipe['id'] } }
   | { type: 'remove-recipe'; payload: { id: Recipe['id'] } }
-  | { type: 'remove-recipe-ingredient'; payload: { id: Ingredient['id'] } }
+  | { type: 'update-recipe'; payload: { recipe: DraftRecipe } }
   | { type: 'remove-editinId' }
   | { type: 'add-category'; payload: { category: Category } };
 
@@ -71,12 +71,17 @@ export const recipeReducer = (
       editingId: '',
     };
   }
-  if (action.type === 'remove-recipe-ingredient') {
+  if (action.type === 'update-recipe') {
     const updatedRecipes = state.recipes.map((recipe) => {
+      const { name, instructions, ingredients } = action.payload.recipe;
       if (recipe.id === state.editingId) {
-        recipe.ingredients = recipe.ingredients.filter(
-          (ingredient) => ingredient.id !== action.payload.id
-        );
+        recipe = {
+          ...recipe,
+          id: uuidv4(),
+          ingredients: ingredients.map((ingredient) => ingredient),
+          name,
+          instructions,
+        };
       }
       return recipe;
     });

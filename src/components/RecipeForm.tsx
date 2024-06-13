@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react';
 import { useRecipe } from '../hooks/useRecipe';
 import {
   Box,
@@ -25,48 +25,62 @@ export const RecipeForm = () => {
     instructions: '',
   });
 
+  /* 
+    If draftIngredients changes, it updates the recipe ingredients array 
+    adding or deleting that one, that wouldn't happen unles you changed the 
+    input value of any ingredient after adding or deleting one of them.
+  */
+  useMemo(
+    () => setRecipe({ ...recipe, ingredients: draftIngredients }),
+    [draftIngredients]
+  );
+
   useEffect(() => {
     if (state.editingId) {
       const editingRecipe = state.recipes.filter(
         (recipe) => recipe.id === state.editingId
       )[0];
+      const editingRecipeIngredients = editingRecipe.ingredients.map(
+        (ingredient) => ingredient
+      );
 
       setRecipe(editingRecipe);
+      /* 
+        Set those so they can be edited with out using any reducer action,
+        that way the state is centralized into the RecipeForm and 
+        NewIngredient components 
+      */
+      setDraftIngredients(editingRecipeIngredients);
     }
   }, [state.editingId]);
 
-  const setIngredientInputs = () => {
-    if (state.editingId) {
-      return recipe.ingredients.map((ingredient) => (
-        <NewIngredient
-          key={ingredient.id}
-          name={ingredient.name}
-          ingredientValue={ingredient.value}
-          id={ingredient.id}
-          draftIngredients={draftIngredients}
-          setDraftIngredients={setDraftIngredients}
-        />
-      ));
-    } else
-      return draftIngredients.map((ingredient) => (
-        <NewIngredient
-          key={ingredient.id}
-          name={ingredient.name}
-          id={ingredient.id}
-          draftIngredients={draftIngredients}
-          setDraftIngredients={setDraftIngredients}
-        />
-      ));
+  // Set the recipe ingredients
+  const onIngredientChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { id } = e.target;
+
+    const updatedValueIngredients = draftIngredients.map((ingredient) => {
+      // Set ingredient value
+      if (ingredient.id === id) {
+        ingredient = { ...ingredient, value: e.target.value };
+      }
+      return ingredient;
+    });
+    setDraftIngredients(updatedValueIngredients);
+    setRecipe({
+      ...recipe,
+      ingredients: draftIngredients,
+    });
   };
 
+  // Set every property of the recipe but the ingredients
   const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
-    const ingredients = draftIngredients.map((ingredient) => ingredient);
-
     setRecipe({
       ...recipe,
-      ingredients,
+      ingredients: draftIngredients,
       [name]: value,
     });
   };
@@ -81,12 +95,21 @@ export const RecipeForm = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (Object.values(recipe).includes('')) {
+    // Look for no filled ingredient inputs
+    const allIngredientsFilled = recipe.ingredients.filter(
+      (ingredient) => ingredient.value.trim() === ''
+    );
+
+    if (Object.values(recipe).includes('') || allIngredientsFilled.length > 0) {
       setError('You must fill all fields');
       return;
     }
 
-    dispatch({ type: 'add-recipe', payload: { recipe } });
+    if (state.editingId) {
+      dispatch({ type: 'update-recipe', payload: { recipe } });
+    } else {
+      dispatch({ type: 'add-recipe', payload: { recipe } });
+    }
     onClose();
   };
 
@@ -110,7 +133,20 @@ export const RecipeForm = () => {
       </Box>
 
       <Box className="space-y-3">
-        {setIngredientInputs()}
+        {
+          // Set ingredient inputs
+          draftIngredients.map((ingredient) => (
+            <NewIngredient
+              key={ingredient.id}
+              name={ingredient.name}
+              id={ingredient.id}
+              ingredientValue={ingredient.value}
+              draftIngredients={draftIngredients}
+              setDraftIngredients={setDraftIngredients}
+              onIngredientChange={onIngredientChange}
+            />
+          ))
+        }
         <IconButton
           bg="#ff8b00"
           _hover={{
@@ -133,6 +169,7 @@ export const RecipeForm = () => {
           h="150"
           className=" resize-none"
           placeholder="Ex: First add all dry ingredients..."
+          value={recipe.instructions}
         />
       </Box>
 
@@ -145,7 +182,7 @@ export const RecipeForm = () => {
         className="w-full"
         colorScheme="blue"
       >
-        Add
+        {state.editingId ? 'Update' : 'Add'}
       </Button>
     </form>
   );
