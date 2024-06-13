@@ -1,13 +1,13 @@
 import { ChangeEvent, Dispatch } from 'react';
 import { Box, FormLabel, IconButton, Input } from '@chakra-ui/react';
 import { Minus } from 'lucide-react';
-import { useRecipe } from '../hooks/useRecipe';
 import { Ingredient } from '../types';
+import { useRecipe } from '../hooks/useRecipe';
 
 type NewIngredientProps = {
   id: Ingredient['id'];
   name: Ingredient['name'];
-  value?: Ingredient['value'];
+  ingredientValue?: Ingredient['value'];
   draftIngredients: Ingredient[];
   setDraftIngredients: Dispatch<
     React.SetStateAction<
@@ -23,15 +23,17 @@ type NewIngredientProps = {
 export const NewIngredient = ({
   id,
   name,
-  value,
+  ingredientValue,
   setDraftIngredients,
   draftIngredients,
 }: NewIngredientProps) => {
+  const { state, dispatch } = useRecipe();
+
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     const updatedValueIngredients = draftIngredients.map((ingredient) => {
+      // Set ingredient value
       if (ingredient.id === id) {
-        ingredient.value === e.target.value;
+        ingredient = { ...ingredient, value: e.target.value };
       }
       return ingredient;
     });
@@ -39,10 +41,14 @@ export const NewIngredient = ({
   };
 
   const handleDeleteIngredient = () => {
-    const updatedIngredients = draftIngredients.filter(
-      (ingredient) => ingredient.id !== id
-    );
-    setDraftIngredients(updatedIngredients);
+    if (state.editingId) {
+      dispatch({ type: 'remove-recipe-ingredient', payload: { id } });
+    } else {
+      const updatedIngredients = draftIngredients.filter(
+        (ingredient) => ingredient.id !== id
+      );
+      setDraftIngredients(updatedIngredients);
+    }
   };
 
   return (
@@ -51,7 +57,7 @@ export const NewIngredient = ({
 
       <Box className=" flex gap-4 items-center">
         <Input
-          value={value}
+          value={ingredientValue}
           onChange={onChange}
           name={name}
           id={id}

@@ -41,7 +41,7 @@ export const RecipeForm = () => {
         <NewIngredient
           key={ingredient.id}
           name={ingredient.name}
-          value={ingredient.value}
+          ingredientValue={ingredient.value}
           id={ingredient.id}
           draftIngredients={draftIngredients}
           setDraftIngredients={setDraftIngredients}

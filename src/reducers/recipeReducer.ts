@@ -5,6 +5,7 @@ export type RecipeActions =
   | { type: 'add-recipe'; payload: { recipe: DraftRecipe } }
   | { type: 'set-editing-id'; payload: { id: Recipe['id'] } }
   | { type: 'remove-recipe'; payload: { id: Recipe['id'] } }
+  | { type: 'remove-recipe-ingredient'; payload: { id: Ingredient['id'] } }
   | { type: 'remove-editinId' }
   | { type: 'add-category'; payload: { category: Category } };
 
@@ -68,6 +69,21 @@ export const recipeReducer = (
     return {
       ...state,
       editingId: '',
+    };
+  }
+  if (action.type === 'remove-recipe-ingredient') {
+    const updatedRecipes = state.recipes.map((recipe) => {
+      if (recipe.id === state.editingId) {
+        recipe.ingredients = recipe.ingredients.filter(
+          (ingredient) => ingredient.id !== action.payload.id
+        );
+      }
+      return recipe;
+    });
+
+    return {
+      ...state,
+      recipes: updatedRecipes,
     };
   }
 
