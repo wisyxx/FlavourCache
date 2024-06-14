@@ -4,15 +4,13 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalCloseButton,
-  IconButton,
+  ModalCloseButton
 } from '@chakra-ui/react';
-import { NotebookPen } from 'lucide-react';
 import { useRecipe } from '../hooks/useRecipe';
 import { RecipeForm } from './RecipeForm';
 
 export const AddRecipeModal = () => {
-  const { onOpen, onClose, isOpen, dispatch } = useRecipe();
+  const { onClose, isOpen, dispatch } = useRecipe();
 
   const handleClose = () => {
     dispatch({type: 'remove-editinId'});
@@ -20,23 +18,6 @@ export const AddRecipeModal = () => {
 
   return (
     <>
-      <IconButton
-        onClick={onOpen}
-        aria-label="New recipe"
-        bg="#444444"
-        size="lg"
-        isRound={true}
-        _hover={{
-          background: '#ffc60b',
-        }}
-        _active={{
-          background: '#ffdb66',
-        }}
-        icon={<NotebookPen className=" text-white" />}
-      >
-        Button
-      </IconButton>
-
       <Modal
         onCloseComplete={handleClose}
         size="xl"

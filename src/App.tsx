@@ -12,7 +12,7 @@ export const App = () => {
 
   return (
     <>
-      <header className=" bg-orange-500 p-4 flex justify-between">
+      <header className=" bg-orange-500 p-4 flex justify-center">
         <h1 className=" text-white font-black text-4xl">FlavourCache</h1>
         <AddRecipeModal />
       </header>
