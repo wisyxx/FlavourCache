@@ -4,7 +4,7 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalCloseButton
+  ModalCloseButton,
 } from '@chakra-ui/react';
 import { useRecipe } from '../hooks/useRecipe';
 import { RecipeForm } from './RecipeForm';
@@ -13,7 +13,7 @@ export const AddRecipeModal = () => {
   const { onClose, isOpen, dispatch } = useRecipe();
 
   const handleClose = () => {
-    dispatch({type: 'remove-editinId'});
+    dispatch({ type: 'remove-editinId' });
   };
 
   return (

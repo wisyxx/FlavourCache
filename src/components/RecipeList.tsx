@@ -2,6 +2,7 @@ import { IconButton } from '@chakra-ui/react';
 import { useRecipe } from '../hooks/useRecipe';
 import { RecipeDisplay } from './RecipeDisplay';
 import { NotebookPen } from 'lucide-react';
+import { AddRecipeModal } from './AddRecipeModal';
 
 export const RecipeList = () => {
   const { state, onOpen } = useRecipe();
@@ -23,10 +24,9 @@ export const RecipeList = () => {
             background: '#ffdb66',
           }}
           icon={<NotebookPen className=" text-white" />}
-        >
-          Button
-        </IconButton>
+        />
       </div>
+      <AddRecipeModal />
       <div className="space-y-4 p-4">
         {state.recipes.map((recipe) => (
           <RecipeDisplay key={recipe.id} recipe={recipe} />

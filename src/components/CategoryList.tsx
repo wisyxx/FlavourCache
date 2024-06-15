@@ -1,17 +1,10 @@
-import {
-  IconButton,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-} from '@chakra-ui/react';
+import { IconButton } from '@chakra-ui/react';
 import { CopyPlus } from 'lucide-react';
 import { useCategory } from '../hooks/useCategory';
+import { AddCategoryModal } from './AddCategoryModal';
 
 export const CategoryList = () => {
-  const { isOpen, onOpen, onClose } = useCategory();
+  const { onOpen } = useCategory();
   return (
     <div className="bg-[#ffdd6d] shadow-lg rounded-lg p-5 min-w-[300px]">
       <div className="flex justify-between items-center">
@@ -32,18 +25,8 @@ export const CategoryList = () => {
         >
           Button
         </IconButton>
-
-        <Modal size="xl" isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent bg="#feffdb">
-            <ModalHeader fontWeight="bold">Add new recipe</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <h1>It works</h1>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
       </div>
+      <AddCategoryModal />
     </div>
   );
 };
