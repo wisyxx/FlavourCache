@@ -2,12 +2,17 @@ import { CategoryList } from './components/CategoryList';
 import { RecipeList } from './components/RecipeList';
 import { useEffect } from 'react';
 import { useRecipe } from './hooks/useRecipe';
+import { useCategory } from './hooks/useCategory';
 
 export const App = () => {
-  const { state } = useRecipe();
+  const { state: recipeState } = useRecipe();
+  const { state: categoryState } = useCategory();
   useEffect(() => {
-    localStorage.setItem('recipes', JSON.stringify(state.recipes));
-  }, [state]);
+    localStorage.setItem('recipes', JSON.stringify(recipeState.recipes));
+  }, [recipeState]);
+  useEffect(() => {
+    localStorage.setItem('categories', JSON.stringify(categoryState.categories));
+  }, [categoryState]);
 
   return (
     <>

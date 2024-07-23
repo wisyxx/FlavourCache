@@ -11,7 +11,7 @@ export type CategoryState = {
 };
 
 const initialCategories = (): Category[] => {
-  const categories = localStorage.getItem('recipes');
+  const categories = localStorage.getItem('categories');
   return categories ? JSON.parse(categories) : [];
 };
 
