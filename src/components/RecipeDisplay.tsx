@@ -90,7 +90,7 @@ export const RecipeDisplay = ({ recipe }: RecipeDisplayProps) => {
 
   return (
     <div className="shadow-xl p-6 rounded-lg w-full bg-[#ffa335]">
-      <div className="flex justify-between items-center mb-5">
+      <div className="flex flex-col md:flex-row text-center md:text-left justify-between items-center mb-5">
         <h1 className="text-2xl font-bold mb-2">{name}</h1>
         <div className="flex gap-4">
           <IconButton
