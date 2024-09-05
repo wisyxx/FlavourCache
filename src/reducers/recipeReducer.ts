@@ -6,7 +6,7 @@ export type RecipeActions =
   | { type: 'set-editing-id'; payload: { id: Recipe['id'] } }
   | { type: 'remove-recipe'; payload: { id: Recipe['id'] } }
   | { type: 'update-recipe'; payload: { recipe: DraftRecipe } }
-  | { type: 'remove-editinId' };
+  | { type: 'remove-editing-id' };
 
 export type RecipeState = {
   recipes: Recipe[];
@@ -57,7 +57,7 @@ export const recipeReducer = (
       editingId: action.payload.id,
     };
   }
-  if (action.type === 'remove-editinId') {
+  if (action.type === 'remove-editing-id') {
     return {
       ...state,
       editingId: '',

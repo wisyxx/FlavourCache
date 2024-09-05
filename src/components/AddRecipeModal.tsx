@@ -13,7 +13,7 @@ export const AddRecipeModal = () => {
   const { onClose, isOpen, dispatch } = useRecipe();
 
   const handleClose = () => {
-    dispatch({ type: 'remove-editinId' });
+    dispatch({ type: 'remove-editing-id' });
   };
 
   return (
