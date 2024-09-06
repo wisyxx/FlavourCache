@@ -1,6 +1,6 @@
 import { Box, Button, FormLabel, Input } from '@chakra-ui/react';
 import { useCategory } from '../hooks/useCategory';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { DraftCategory } from '../types';
 
 export const CategoryForm = () => {
@@ -9,6 +9,16 @@ export const CategoryForm = () => {
   const [category, setCategory] = useState<DraftCategory>({
     name: '',
   });
+
+  // If editing add category data to form fields
+  useEffect(() => {
+    if (state.editingId) {
+      const editingCategory = state.categories.filter(
+        (category) => category.id === state.editingId
+      )[0];
+      setCategory(editingCategory);
+    }
+  }, [state.editingId]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const categoryName = e.target.value;
@@ -21,7 +31,9 @@ export const CategoryForm = () => {
     if (Object.values(category).includes('')) {
       setError('You must fill all fields');
     } else {
-      dispatch({ type: 'add-category', payload: { category } });
+      state.editingId
+        ? dispatch({ type: 'update-category', payload: { category } })
+        : dispatch({ type: 'add-category', payload: { category } });
       onClose();
     }
   };
@@ -41,7 +53,7 @@ export const CategoryForm = () => {
           type="text"
           size="md"
           placeholder="Category name"
-          //   value={}
+          value={category.name}
         />
       </Box>
 
