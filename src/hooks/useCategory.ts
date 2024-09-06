@@ -5,7 +5,7 @@ export const useCategory = () => {
   const context = useContext(CategoryContext);
 
   if (!context) {
-    throw new Error('useRecipe must be used within a BudgetProvider');
+    throw new Error('useCategory must be used within a CategoryProvider');
   }
 
   return context;

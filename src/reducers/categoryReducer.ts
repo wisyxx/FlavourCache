@@ -4,7 +4,7 @@ import { Category, DraftCategory } from '../types';
 export type CategoryActions =
   | { type: 'add-category'; payload: { category: DraftCategory } }
   | { type: 'update-category'; payload: { category: DraftCategory } }
-  | { type: 'remove-category'; payload: { category: Category } }
+  | { type: 'remove-category'; payload: { id: Category['id'] } }
   | { type: 'set-editing-id'; payload: { id: Category['id'] } }
   | { type: 'remove-editing-id' };
 
@@ -76,5 +76,15 @@ export const categoryReducer = (
     };
   }
 
+  if (action.type === 'remove-category') {
+    const updatedCategories = state.categories.filter(
+      (category) => category.id !== action.payload.id
+    );
+
+    return {
+      ...state,
+      categories: updatedCategories,
+    };
+  }
   return state;
 };
