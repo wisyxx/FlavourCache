@@ -11,6 +11,7 @@ export const useRecipeForm = () => {
   ]);
   const [recipe, setRecipe] = useState<DraftRecipe>({
     name: '',
+    category: '',
     ingredients: [],
     instructions: '',
   });
@@ -30,6 +31,7 @@ export const useRecipeForm = () => {
       const editingRecipe = state.recipes.filter(
         (recipe) => recipe.id === state.editingId
       )[0];
+
       const editingRecipeIngredients = editingRecipe.ingredients.map(
         (ingredient) => ingredient
       );
@@ -65,8 +67,12 @@ export const useRecipeForm = () => {
   };
 
   // Set every property of the recipe but the ingredients
-  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const onChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
+
+    console.log(name, value);
 
     setRecipe({
       ...recipe,
@@ -90,6 +96,8 @@ export const useRecipeForm = () => {
       (ingredient) => ingredient.value.trim() === ''
     );
 
+    console.log(recipe);
+
     if (Object.values(recipe).includes('') || allIngredientsFilled.length > 0) {
       setError('You must fill all fields');
       return;
@@ -112,6 +120,6 @@ export const useRecipeForm = () => {
     setDraftIngredients,
     onIngredientChange,
     handleAddIngredient,
-    state
+    state,
   };
 };

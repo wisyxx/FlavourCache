@@ -5,10 +5,12 @@ import {
   FormLabel,
   Textarea,
   IconButton,
+  Select,
 } from '@chakra-ui/react';
 import { NewIngredient } from './NewIngredient';
 import { Plus } from 'lucide-react';
 import { useRecipeForm } from '../hooks/useRecipeForm';
+import { useCategory } from '../hooks/useCategory';
 
 export const RecipeForm = () => {
   const {
@@ -22,6 +24,8 @@ export const RecipeForm = () => {
     handleAddIngredient,
     state,
   } = useRecipeForm();
+
+  const { state: categoryState } = useCategory();
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3 p-3">
@@ -40,6 +44,21 @@ export const RecipeForm = () => {
           placeholder="Recipe name"
           value={recipe.name}
         />
+      </Box>
+
+      <Box>
+        <Select
+          name="category"
+          id="category"
+          onChange={onChange}
+          placeholder="Select option"
+        >
+          {categoryState.categories.map((category) => (
+            <option key={category.id} value={category.name}>
+              {category.name}
+            </option>
+          ))}
+        </Select>
       </Box>
 
       <Box className="space-y-3">

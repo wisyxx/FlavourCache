@@ -82,7 +82,7 @@ export const CategoryDisplay = ({ category }: CategoryDisplayProps) => {
 
   return (
     <div className="flex items-center justify-between p-2 bg-[#ffa335] rounded-md">
-      <h1 key={category.id}>{category.name}</h1>
+      <h1 className='font-medium' key={category.id}>{category.name}</h1>
       <div className="flex gap-2">
         <IconButton
           onClick={handleEdit}

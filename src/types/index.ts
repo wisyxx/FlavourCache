@@ -12,12 +12,14 @@ export type Ingredient = {
 };
 export type DraftRecipe = {
   name: string;
+  category: string;
   ingredients: Ingredient[];
   instructions: string;
 };
 export type Recipe = {
   id: string;
   name: string;
+  category: string;
   ingredients: Ingredient[];
   instructions: string;
 };

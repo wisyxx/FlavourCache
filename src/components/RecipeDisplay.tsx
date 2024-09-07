@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { useRecipe } from '../hooks/useRecipe';
 import 'animate.css';
+import { useCategory } from '../hooks/useCategory';
 
 type RecipeDisplayProps = {
   recipe: Recipe;
@@ -22,7 +23,8 @@ export const RecipeDisplay = ({ recipe }: RecipeDisplayProps) => {
   const SweetAlert = withReactContent(Swal);
 
   const { dispatch, onOpen } = useRecipe();
-  const { name, instructions, ingredients, id } = recipe;
+  const { state } = useCategory();
+  const { name, instructions, ingredients, id, category } = recipe;
 
   const handleEdit = () => {
     dispatch({
@@ -91,7 +93,12 @@ export const RecipeDisplay = ({ recipe }: RecipeDisplayProps) => {
   return (
     <div className="shadow-xl p-6 rounded-lg w-full bg-[#ffa335]">
       <div className="flex flex-col md:flex-row text-center md:text-left justify-between items-center mb-5">
-        <h1 className="text-2xl font-bold mb-2">{name}</h1>
+        <div className="mb-2">
+          <h1 className="text-2xl font-bold">{name}</h1>
+          <h2 className="text-lg font-medium">
+            <span className="font-bold">Category:</span> {category}
+          </h2>
+        </div>
         <div className="flex gap-4">
           <IconButton
             onClick={handleEdit}
