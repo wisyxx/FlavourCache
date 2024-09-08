@@ -65,7 +65,8 @@ export const recipeReducer = (
   }
   if (action.type === 'update-recipe') {
     const updatedRecipes = state.recipes.map((recipe) => {
-      const { name, instructions, ingredients } = action.payload.recipe;
+      const { name, instructions, ingredients, category } =
+        action.payload.recipe;
       if (recipe.id === state.editingId) {
         recipe = {
           ...recipe,
@@ -73,6 +74,7 @@ export const recipeReducer = (
           ingredients: ingredients.map((ingredient) => ingredient),
           name,
           instructions,
+          category,
         };
       }
       return recipe;

@@ -51,6 +51,7 @@ export const RecipeForm = () => {
           name="category"
           id="category"
           onChange={onChange}
+          value={recipe.category}
           placeholder="Select option"
         >
           {categoryState.categories.map((category) => (
