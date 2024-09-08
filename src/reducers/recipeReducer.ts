@@ -1,15 +1,17 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Recipe, DraftRecipe } from '../types';
+import { Recipe, DraftRecipe, Category } from '../types';
 
 export type RecipeActions =
   | { type: 'add-recipe'; payload: { recipe: DraftRecipe } }
   | { type: 'set-editing-id'; payload: { id: Recipe['id'] } }
   | { type: 'remove-recipe'; payload: { id: Recipe['id'] } }
   | { type: 'update-recipe'; payload: { recipe: DraftRecipe } }
-  | { type: 'remove-editing-id' };
+  | { type: 'remove-editing-id' }
+  | { type: 'filter'; payload: { filter: Category['name'] } };
 
 export type RecipeState = {
   recipes: Recipe[];
+  filter: Category['name'];
   editingId: Recipe['id'];
 };
 
@@ -20,6 +22,7 @@ const initialRecipes = (): Recipe[] => {
 
 export const initialState: RecipeState = {
   recipes: initialRecipes(),
+  filter: 'All',
   editingId: '',
 };
 
@@ -83,6 +86,13 @@ export const recipeReducer = (
     return {
       ...state,
       recipes: updatedRecipes,
+    };
+  }
+
+  if (action.type === 'filter') {
+    return {
+      ...state,
+      filter: action.payload.filter,
     };
   }
 

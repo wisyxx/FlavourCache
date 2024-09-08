@@ -72,8 +72,6 @@ export const useRecipeForm = () => {
   ) => {
     const { name, value } = e.target;
 
-    console.log(name, value);
-
     setRecipe({
       ...recipe,
       ingredients: draftIngredients,
@@ -95,8 +93,6 @@ export const useRecipeForm = () => {
     const allIngredientsFilled = recipe.ingredients.filter(
       (ingredient) => ingredient.value.trim() === ''
     );
-
-    console.log(recipe);
 
     if (Object.values(recipe).includes('') || allIngredientsFilled.length > 0) {
       setError('You must fill all fields');
