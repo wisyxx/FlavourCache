@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react';
 import { useRecipe } from '../hooks/useRecipe';
 import 'animate.css';
-import { useCategory } from '../hooks/useCategory';
 
 type RecipeDisplayProps = {
   recipe: Recipe;
@@ -23,7 +22,6 @@ export const RecipeDisplay = ({ recipe }: RecipeDisplayProps) => {
   const SweetAlert = withReactContent(Swal);
 
   const { dispatch, onOpen } = useRecipe();
-  const { state } = useCategory();
   const { name, instructions, ingredients, id, category } = recipe;
 
   const handleEdit = () => {
